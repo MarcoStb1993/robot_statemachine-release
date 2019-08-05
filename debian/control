@@ -1,0 +1,12 @@
+Source: ros-kinetic-rsm-rviz-plugins
+Section: misc
+Priority: extra
+Maintainer: marco <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-cmake-modules, ros-kinetic-interactive-markers, ros-kinetic-roscpp, ros-kinetic-rsm-msgs, ros-kinetic-rviz, ros-kinetic-visualization-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-rsm-rviz-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-cmake-modules, ros-kinetic-interactive-markers, ros-kinetic-roscpp, ros-kinetic-rsm-msgs, ros-kinetic-rviz, ros-kinetic-visualization-msgs
+Description: The rsm_rviz_plugins package includes the Robot Statemachine GUI plugin for RViz and the waypoint visualization
