@@ -1,8 +1,30 @@
-# Robot Statemachine (RSM)
-A state machine for exploration and waypoint following for arbitrary robots in inspection, rescue or similar scenarios. The RSM is built to be used with custom navigation and exploration as well as mapping procedures and routines. It can be controlled by the provided plugins for RViz and/or rqt. Below, from left to right exploration, waypoint_following and simple goal navigation can be seen in RViz with the RSM's GUI plugin.
+# RSM RViz Additions
 
-![Statemachine demo](images/rsm_demo.png)
+Implements a RSM Control Panel, that can be added as a panel for RViz. See the [RSM documentation](../rsm_core#gui-introduction) for a detailed description. Also includes the **Plant Waypoint Tool** for RViz, that is explained in the formerly mentioned description as well. Futhermore, a node visualizing the waypoints as [interactive markers](http://wiki.ros.org/interactive_markers) is in the package.
 
-The RSM with it's base state and non-customizable states as well as it's data and interface handler is located in the [rsm_core package](rsm_core#rsm-core). Messages and services created for the RSM are located in the [rsm_msgs package](rsm_msgs#rsm-msgs). Exemplary custom states for exploration, navigation and routines together with a handler class for their data are placed inside the [rsm_additions package](rsm_additions#rsm-additions). GUI plugins for RViz that include a panel with controls, the **Plant Waypoint Tool** and an interactive marker visualization for waypoints can be found in [rsm_rviz_plugins](rsm_rviz_plugins#rsm-rviz-plugins). The same panel with controls can also be added as a plugin for rqt and is included in the [rsm_rqt_plugins package](rsm_rqt_plugins#rsm-rqt-plugins).
+## Documentation
 
-For a detailed description of the state machine's operation as well as tutorials and examples describing how to write plugins, integrate them into the RSM and setup your robot to use the RSM go to the [rsm_core package](rsm_core#rsm-core).
+The [Waypoint Following Visualization](#waypoint-following-visualization) realizes the visualiation of all waypoints as [interactive markers](http://wiki.ros.org/interactive_markers) in RViz.
+
+### Waypoint Following Visualization
+
+This class subscribes to the list of waypoints published by the [RSM package](../rsm_core#rsm_core) and visualizes them as [interactive markers](http://wiki.ros.org/interactive_markers). For each waypoint a flagpole with the waypoint's number overhead is shown. The waypoints can be moved on the x-y-plane by dragging them around, clicking on the surrounding circle or on the z-axis by dragging them at the arrows pointing up or down. Right clicking on the flagpole opens a menu, that shows the options to delete the waypoint or assign a routine.
+
+All changes made to the waypoint in RViz are immediately forwarded to the [RSM data handler](../rsm_core#service-provider). The markers are only redrawn when one of the following changes occurs in the waypoint array:
+* Waypoint list size changed
+* Waypoint routine changed
+* Waypoint visited status changed
+* Waypoint unreachable status changed
+
+When moving the waypoints, the visualization is not reloaded depending on the waypoint list because of the high data transfer this causes. This can lead to differences in the shown position of the marker and the actual position of the waypoint in the list when the system is experiencing high load and/or a slow connection. Therefore, there is a timer initiating a periodical refresh upon receiving the waypoints.
+
+## Nodes
+
+### waypointFollowingVisualizationNode
+
+Visualizes all waypoints as interactive markers for RViz.
+
+#### Subscribed Topics
+
+**waypoints** ([rsm_msgs/WaypointArray](../rsm_msgs/msg/WaypointArray.msg))  
+List of all waypoints and their information
