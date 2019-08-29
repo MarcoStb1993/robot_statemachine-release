@@ -1,0 +1,12 @@
+Source: ros-kinetic-robot-statemachine
+Section: misc
+Priority: extra
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.de>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-robot-statemachine
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-rsm-additions, ros-kinetic-rsm-core, ros-kinetic-rsm-msgs, ros-kinetic-rsm-rqt-plugins, ros-kinetic-rsm-rviz-plugins
+Description: The robot_statemachine package bundles all functionalities and the GUI
