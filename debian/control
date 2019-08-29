@@ -1,0 +1,12 @@
+Source: ros-kinetic-rsm-core
+Section: misc
+Priority: extra
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-actionlib, ros-kinetic-actionlib-msgs, ros-kinetic-catkin, ros-kinetic-geometry-msgs, ros-kinetic-pluginlib, ros-kinetic-roscpp, ros-kinetic-rsm-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs, ros-kinetic-tf
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-rsm-core
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-actionlib, ros-kinetic-actionlib-msgs, ros-kinetic-geometry-msgs, ros-kinetic-pluginlib, ros-kinetic-roscpp, ros-kinetic-rsm-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs, ros-kinetic-tf
+Description: The statemachine package includes the Robot Statemachine's main functionality
