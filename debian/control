@@ -1,0 +1,12 @@
+Source: ros-kinetic-rsm-msgs
+Section: misc
+Priority: extra
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-geometry-msgs, ros-kinetic-message-generation, ros-kinetic-roscpp, ros-kinetic-std-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-rsm-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-geometry-msgs, ros-kinetic-message-runtime, ros-kinetic-roscpp, ros-kinetic-std-msgs
+Description: The rsm_msgs package features messages and services for the Robot Statemachine
