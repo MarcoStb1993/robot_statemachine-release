@@ -1,0 +1,12 @@
+Source: ros-kinetic-rsm-rqt-plugins
+Section: misc
+Priority: extra
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-cmake-modules, ros-kinetic-roscpp, ros-kinetic-rqt-gui, ros-kinetic-rqt-gui-cpp, ros-kinetic-rsm-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-rsm-rqt-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-cmake-modules, ros-kinetic-roscpp, ros-kinetic-rqt-gui, ros-kinetic-rqt-gui-cpp, ros-kinetic-rsm-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs
+Description: The rsm_rqt_plugins package includes the Robot Statemachine GUI plugin for rqt
