@@ -14,6 +14,10 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/server/simple_action_server.h>
 
+#include <std_msgs/Bool.h>
+#include <rsm_msgs/GetNavigationGoal.h>
+#include <rsm_msgs/GoalCompleted.h>
+
 typedef actionlib::SimpleActionServer<move_base_msgs::MoveBaseAction> MoveBaseActionServer;
 
 namespace rsm {
@@ -38,11 +42,17 @@ private:
 	ros::Subscriber _reverse_mode_cmd_vel_subscriber;
 	ros::Publisher _reverse_mode_cmd_vel_publisher;
 
-	ros::Subscriber frontiers_marker_array_subscriber;
-	ros::Publisher exploration_goals_publisher;
+	ros::Publisher _failed_goals_publisher;
 
-	ros::ServiceServer _reset_kinect_position_serivce;
-	ros::Publisher _kinetic_joint_controller;
+	ros::Subscriber frontiers_marker_array_subscriber;
+	ros::Publisher _exploration_goals_publisher;
+	ros::ServiceClient _get_navigation_goal_service;
+	ros::Publisher _goal_obsolete_publisher;
+	ros::Subscriber _exploration_goal_subscriber;
+	ros::Subscriber _exploration_mode_subscriber;
+
+	ros::ServiceServer _reset_realsense_position_serivce;
+	ros::Publisher _realsense_joint_controller;
 
 	/**
 	 * SimpleActionServer for making Explore Lite run and lead it to believe it talks to Move Base
@@ -52,15 +62,30 @@ private:
 	 *Topic name for the autonomy cmd vel topic to be recorded
 	 */
 	std::string _autonomy_cmd_vel_topic;
-
 	/**
 	 * List of all extracted frontier centers
 	 */
 	geometry_msgs::PoseArray _exploration_goals;
 	/**
-	 * Is the Navigation stack used as Plugin for navigation
+	 * List of previously failed goals
 	 */
-	bool _navigation_plugin_used;
+	geometry_msgs::PoseArray _failed_goals;
+	/**
+	 * Tolerance for comparing if the current goal is still in the list of exploration goals
+	 */
+	double _exploration_goal_tolerance;
+	/**
+	 * Mode of exploration (0=complete goal, 1=interrupt goal when exploration goals vanished)
+	 */
+	bool _exploration_mode;
+	/**
+	 * Is the Calculate Goal plugin used
+	 */
+	bool _calculate_goal_plugin_used;
+	/**
+	 * Is navigation goal still an exploration goal
+	 */
+	bool _goal_obsolete;
 
 	/**
 	 * Callback for receiving autonomy cmd vel messages and save the ones not equals zero in the cirular buffer
@@ -95,8 +120,34 @@ private:
 	 * Publish list of extracted frontier centers for further calculation
 	 */
 	void publishExplorationGoals();
+	/**
+	 * Publish list of previously failed goals
+	 */
+	void publishFailedGoals();
+	/**
+	 * Publish if current exploration goal is obsolete if exploration mode is set to interrupt
+	 */
+	void publishGoalObsolete();
 
-	bool resetKinectPosition(std_srvs::Trigger::Request &req,
+	/**
+	 * Callback for exploration goal status
+	 * @param goal_status Current goal status and pose
+	 */
+	void explorationGoalCallback(
+			const rsm_msgs::GoalStatus::ConstPtr& goal_status);
+	/**
+	 * Callback for exploration mode
+	 * @param exploration_mode Exploration mode (0=complete goal, 1=interrupt goal when exploration goals vanished)
+	 */
+	void explorationModeCallback(
+			const std_msgs::Bool::ConstPtr& exploration_mode);
+	/**
+	 * Checks if the current navigation goal is still present as an exploration goal
+	 * @return Returns true if the current navigation goal is still an exploration goal to be explored
+	 */
+	bool navGoalIncludedInFrontiers();
+
+	bool resetRealsensePosition(std_srvs::Trigger::Request &req,
 			std_srvs::Trigger::Response &res);
 };
 
