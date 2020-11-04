@@ -7,6 +7,7 @@
 #include <rsm_core/EmergencyStopState.h>
 #include <rsm_core/TeleoperationState.h>
 #include <rsm_core/StateInterface.h>
+#include <rsm_msgs/GoalCompleted.h>
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/Float64.h>
 #include <std_srvs/Trigger.h>
@@ -15,32 +16,32 @@
 #define MOVE_RIGHT 1
 #define MOVE_TO_CENTER 2
 
-#define KINECT_LEFT_LIMIT 1.30
-#define KINECT_RIGHT_LIMIT -1.30
-#define KINECT_CENTER_POSITION 0.0
+#define REALSENSE_LEFT_LIMIT 1.30
+#define REALSENSE_RIGHT_LIMIT -1.30
+#define REALSENSE_CENTER_POSITION 0.0
 
 #define POS_TOLERANCE 0.05
 
 namespace rsm {
 
 /**
- * @class   KinectMappingState
+ * @class   RealsenseMappingState
  * @brief   Dummy state for mapping at a reached goal during exploration. Only initiates transition to
  * 			CalculateGoalState.
  */
-class KinectMappingState: public BaseState {
+class RealsenseMappingState: public BaseState {
 
 public:
 
 	/**
 	 * Constructor
 	 */
-	KinectMappingState();
+	RealsenseMappingState();
 
 	/**
 	 * Destructor
 	 */
-	~KinectMappingState();
+	~RealsenseMappingState();
 
 	/**
 	 * Called once when registered at StateInterface
@@ -92,11 +93,12 @@ private:
 
 	ros::NodeHandle _nh;
 	ros::Subscriber _joint_states_subscriber;
-	ros::Publisher _kinect_joint_controller;
-	ros::ServiceClient _reset_kinect_position_client;
+	ros::Publisher _realsense_joint_controller;
+	ros::ServiceClient _reset_realsense_position_client;
+	ros::ServiceClient _navigation_goal_completed_service;
 
 	/**
-	 * Current state of swiveling the Kinect camera from left to right and back (0: to left, 1: left to right: 2: back to center)
+	 * Current state of swiveling the Realsense camera from left to right and back (0: to left, 1: left to right: 2: back to center)
 	 */
 	int _swivel_state;
 	/**
@@ -104,9 +106,13 @@ private:
 	 */
 	bool _position_reached;
 	/**
-	 * Move command sent to kinect controller
+	 * Move command sent to realsense controller
 	 */
 	bool _message_send;
+	/**
+	 * Was the mapping at the exploration goal successful or not
+	 */
+	int _navigation_completed_status;
 
 	/**
 	 * Callback for joint states to check if camera reached the desired position
