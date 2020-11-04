@@ -17,8 +17,8 @@
 #include <geometry_msgs/PoseArray.h>
 #include <rsm_msgs/SetNavigationGoal.h>
 #include <rsm_msgs/GetNavigationGoal.h>
-#include <rsm_msgs/AddFailedGoal.h>
-#include <rsm_msgs/GetFailedGoals.h>
+#include <rsm_msgs/GoalCompleted.h>
+#include <rsm_msgs/GoalStatus.h>
 
 #include <rsm_msgs/GetRobotPose.h>
 #include <tf/transform_listener.h>
@@ -68,18 +68,15 @@ private:
 
 	ros::ServiceServer _set_navigation_goal_service;
 	ros::ServiceServer _get_navigation_goal_service;
-	ros::ServiceServer _add_failed_goal_service;
-	ros::ServiceServer _get_failed_goals_service;
-	ros::ServiceServer _reset_failed_goals_service;
+	ros::ServiceServer _navigation_goal_completed_service;
 
 	ros::ServiceServer _get_robot_pose_service;
 	tf::TransformListener _transform_listener;
 
 	ros::ServiceServer _set_exploration_mode_service;
 	ros::ServiceServer _get_exploration_mode_service;
-	ros::Subscriber _exploration_goals_subscriber;
-	ros::Publisher _goal_obsolete_publisher;
 	ros::Publisher _exploration_mode_publisher;
+	ros::Publisher _exploration_goal_publisher;
 
 	ros::ServiceServer _set_reverse_mode_service;
 	ros::ServiceServer _get_reverse_mode_service;
@@ -90,10 +87,6 @@ private:
 	 * Current navigation goal
 	 */
 	geometry_msgs::Pose _navigation_goal;
-	/**
-	 * List of previously failed goals
-	 */
-	geometry_msgs::PoseArray _failed_goals;
 	/**
 	 * List of all waypoints
 	 */
@@ -126,18 +119,6 @@ private:
 	 */
 	std::string _robot_frame;
 	/**
-	 * List of all extracted exploration goals
-	 */
-	geometry_msgs::PoseArray _exploration_goals;
-	/**
-	 * Tolerance for comparing if the current goal is still in the list of exploration goals
-	 */
-	double _exploration_goal_tolerance;
-	/**
-	 * Is navigation goal still an exploration goal
-	 */
-	bool _goal_obsolete;
-	/**
 	 * Mode of exploration (0=complete goal, 1=interrupt goal when exploration goals vanished)
 	 */
 	bool _exploration_mode;
@@ -145,6 +126,10 @@ private:
 	 * Is currently driving in reverse
 	 */
 	bool _reverse_mode_active;
+	/**
+	 * Message for completed exploration goal
+	 */
+	rsm_msgs::GoalStatus _exploration_goal_completed_msg;
 
 	bool addWaypoint(rsm_msgs::AddWaypoint::Request &req,
 			rsm_msgs::AddWaypoint::Response &res);
@@ -156,8 +141,7 @@ private:
 			rsm_msgs::RemoveWaypoint::Response &res);
 	bool waypointVisited(rsm_msgs::WaypointVisited::Request &req,
 			rsm_msgs::WaypointVisited::Response &res);
-	bool waypointUnreachable(
-			rsm_msgs::WaypointUnreachable::Request &req,
+	bool waypointUnreachable(rsm_msgs::WaypointUnreachable::Request &req,
 			rsm_msgs::WaypointUnreachable::Response &res);
 	bool resetWaypoints(std_srvs::Trigger::Request &req,
 			std_srvs::Trigger::Response &res);
@@ -166,8 +150,7 @@ private:
 			rsm_msgs::SetWaypointFollowingMode::Response &res);
 	bool setWaypointRoutine(rsm_msgs::SetWaypointRoutine::Request &req,
 			rsm_msgs::SetWaypointRoutine::Response &res);
-	bool getWaypointRoutines(
-			rsm_msgs::GetWaypointRoutines::Request &req,
+	bool getWaypointRoutines(rsm_msgs::GetWaypointRoutines::Request &req,
 			rsm_msgs::GetWaypointRoutines::Response &res);
 	void publishWaypoints();
 
@@ -175,12 +158,8 @@ private:
 			rsm_msgs::SetNavigationGoal::Response &res);
 	bool getNavigationGoal(rsm_msgs::GetNavigationGoal::Request &req,
 			rsm_msgs::GetNavigationGoal::Response &res);
-	bool addFailedGoal(rsm_msgs::AddFailedGoal::Request &req,
-			rsm_msgs::AddFailedGoal::Response &res);
-	bool getFailedGoals(rsm_msgs::GetFailedGoals::Request &req,
-			rsm_msgs::GetFailedGoals::Response &res);
-	bool resetFailedGoals(std_srvs::Trigger::Request &req,
-			std_srvs::Trigger::Response &res);
+	bool NavigationGoalCompleted(rsm_msgs::GoalCompleted::Request &req,
+			rsm_msgs::GoalCompleted::Response &res);
 
 	bool getRobotPose(rsm_msgs::GetRobotPose::Request &req,
 			rsm_msgs::GetRobotPose::Response &res);
@@ -189,12 +168,7 @@ private:
 			std_srvs::Trigger::Response &res);
 	bool setExplorationMode(std_srvs::SetBool::Request &req,
 			std_srvs::SetBool::Response &res);
-	void explorationGoalCallback(const geometry_msgs::PoseArray::ConstPtr& exploration_goals);
-	/**
-	 * Checks if the current navigation goal is still present as an exploration goal
-	 * @return Returns true if the current navigation goal is still an exploration goal to be explored
-	 */
-	bool navGoalIncludedInFrontiers();
+
 	void publishGoalObsolete();
 	void publishExplorationModes();
 
@@ -203,6 +177,7 @@ private:
 	bool getReverseMode(std_srvs::Trigger::Request &req,
 			std_srvs::Trigger::Response &res);
 	void publishReverseMode();
+	void publishExplorationGoalCompleted();
 };
 
 }
