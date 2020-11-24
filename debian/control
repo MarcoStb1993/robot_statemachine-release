@@ -1,0 +1,12 @@
+Source: ros-melodic-rsm-rviz-plugins
+Section: misc
+Priority: optional
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), qtbase5-dev, ros-melodic-catkin, ros-melodic-cmake-modules, ros-melodic-interactive-markers, ros-melodic-pluginlib, ros-melodic-roscpp, ros-melodic-rsm-msgs, ros-melodic-rviz, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-visualization-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-melodic-rsm-rviz-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-cmake-modules, ros-melodic-interactive-markers, ros-melodic-pluginlib, ros-melodic-roscpp, ros-melodic-rsm-msgs, ros-melodic-rviz, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-visualization-msgs
+Description: The rsm_rviz_plugins package includes the Robot Statemachine GUI plugin for RViz and the waypoint visualization
