@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
 	<name>rsm_additions</name>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<description>The rsm_additions package includes plugins for the Robot
 		Statemachine and exemplary launch files
 	</description>
@@ -57,6 +57,9 @@
 	<build_depend>tf2_ros</build_depend>
 	<build_export_depend>tf2_ros</build_export_depend>
 	<exec_depend>tf2_ros</exec_depend>	
+	<build_depend>nav_msgs</build_depend>
+	<build_export_depend>nav_msgs</build_export_depend>
+	<exec_depend>nav_msgs</exec_depend>
 
 	<export>
 		<rsm_core plugin="${prefix}/rsm_plugins.xml" />
