@@ -15,8 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
-#link_directories(${catkin_LIBRARY_DIRS})
-
 # Qt Stuff
 if(rviz_QT_VERSION VERSION_LESS "5")
   find_package(Qt4 ${rviz_QT_VERSION} REQUIRED QtCore QtGui)
