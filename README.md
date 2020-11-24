@@ -1,3 +1,32 @@
+## robot_statemachine (melodic) - 1.2.1-1
+
+The packages in the `robot_statemachine` repository were released into the `melodic` distro by running `/usr/bin/bloom-release robot_statemachine --rosdistro melodic` on `Tue, 24 Nov 2020 14:21:39 -0000`
+
+These packages were released:
+- `robot_statemachine`
+- `rsm_additions`
+- `rsm_core`
+- `rsm_msgs`
+- `rsm_rqt_plugins`
+- `rsm_rviz_plugins`
+
+Version of package(s) in repository `robot_statemachine`:
+
+- upstream repository: https://github.com/MarcoStb1993/robot_statemachine.git
+- release repository: https://github.com/MarcoStb1993/robot_statemachine-release.git
+- rosdistro version: `1.2.0-1`
+- old version: `1.2.0-1`
+- new version: `1.2.1-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.0`
+- catkin_pkg version: `0.4.23`
+- rosdep version: `0.19.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## robot_statemachine (melodic) - 1.2.0-1
 
 The packages in the `robot_statemachine` repository were released into the `melodic` distro by running `/usr/bin/bloom-release robot_statemachine --track melodic --rosdistro melodic --new-track` on `Wed, 04 Nov 2020 07:53:16 -0000`
