@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 set(CMAKE_AUTORCC ON)
 find_package(cmake_modules REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
+include_directories(${Qt5Widgets_INCLUDE_DIRS} include)
 
 ###################################
 ## catkin specific configuration ##
