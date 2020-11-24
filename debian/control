@@ -1,0 +1,12 @@
+Source: ros-melodic-rsm-additions
+Section: misc
+Priority: optional
+Maintainer: Marco Steinbrink <marco.stb1993@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-actionlib, ros-melodic-actionlib-msgs, ros-melodic-catkin, ros-melodic-geometry-msgs, ros-melodic-move-base-msgs, ros-melodic-nav-msgs, ros-melodic-pluginlib, ros-melodic-roscpp, ros-melodic-rsm-core, ros-melodic-rsm-msgs, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-tf2, ros-melodic-tf2-ros, ros-melodic-visualization-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-melodic-rsm-additions
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-actionlib, ros-melodic-actionlib-msgs, ros-melodic-geometry-msgs, ros-melodic-move-base-msgs, ros-melodic-nav-msgs, ros-melodic-pluginlib, ros-melodic-roscpp, ros-melodic-rsm-core, ros-melodic-rsm-msgs, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-tf2, ros-melodic-tf2-ros, ros-melodic-visualization-msgs
+Description: The rsm_additions package includes plugins for the Robot Statemachine and exemplary launch files
